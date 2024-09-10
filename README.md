@@ -12,3 +12,5 @@ flask-sqlalchemy
 flask-wtf
 flask-bcrypt
 ```
+
+### You could make a separate branch and request to push the code but not necessarily :)
