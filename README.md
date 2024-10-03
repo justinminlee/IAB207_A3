@@ -18,7 +18,7 @@ flask-bcrypt
 
 
 
-
+<br></br>
 -- Tasks to do
 ### Part 1: Project Requirements
 Landing Page:
