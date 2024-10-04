@@ -21,7 +21,7 @@ flask-bcrypt
 <br></br>
 -- Tasks to do
 ### Part 1: Project Requirements
-Landing Page:
+<strong>Landing Page:</strong>
 Create a clear landing page that promotes events and allows users to browse by categories.
 Optionally include text-based search functionality for users to filter events.
 
