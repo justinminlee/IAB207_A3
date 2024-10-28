@@ -14,7 +14,9 @@ class LoginForm(FlaskForm):
  # this is the registration form
 class RegisterForm(FlaskForm):
     user_name=StringField("User Name", validators=[InputRequired()])
-    email = StringField("Email Address", validators=[Email("Please enter a valid email")])
+    first_name=StringField("First Name", validators=[InputRequired()])
+    last_name=StringField("Last Name", validators=[InputRequired()]) 
+    email = StringField("Email Address", validators=[Email("Please enter a valid email")]) 
     # linking two fields - password should be equal to data entered in confirm
     password=PasswordField("Password", validators=[InputRequired(),
                   EqualTo('confirm', message="Passwords should match")])
@@ -23,7 +25,7 @@ class RegisterForm(FlaskForm):
     # submit button
     submit = SubmitField("Register")
     
-    #Create new event
+#Create new event
 class EventForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired()])
     description = TextAreaField('Description', 
@@ -31,8 +33,14 @@ class EventForm(FlaskForm):
     image = FileField('Image', validators=[
                 FileRequired(message = 'Image cannot be empty'),
                 FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, JPEG, png, jpg, jpeg')])
+    price = IntegerField('Price($)', validators=[InputRequired()])
     location = StringField( 'Location', validators=[InputRequired()])
     datetime = DateTimeField("Date", format= '%Y-%m-%d', validators=[InputRequired()])
     capacity = IntegerField("Capacity", validators=[InputRequired(), NumberRange(min=50, max=1000)])
     category = StringField('Category', validators=[InputRequired()])
     submit = SubmitField("Create")
+
+#User comment
+class CommentForm(FlaskForm):
+    text = TextAreaField('Leave Comment', [InputRequired()])
+    submit = SubmitField('Create')
