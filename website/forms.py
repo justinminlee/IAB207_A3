@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, IntegerField, DateTimeField, FileField
+from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange
+from flask_wtf.file import FileRequired, FileField, FileAllowed
+
+ALLOWED_FILE = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg'}
 
 # creates the login information
 class LoginForm(FlaskForm):
@@ -19,3 +22,17 @@ class RegisterForm(FlaskForm):
 
     # submit button
     submit = SubmitField("Register")
+    
+    #Create new event
+class EventForm(FlaskForm):
+    name = StringField('Name', validators=[InputRequired()])
+    description = TextAreaField('Description', 
+                validators=[InputRequired()])
+    image = FileField('Image', validators=[
+                FileRequired(message = 'Image cannot be empty'),
+                FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, JPEG, png, jpg, jpeg')])
+    location = StringField( 'Location', validators=[InputRequired()])
+    datetime = DateTimeField("Date", format= '%Y-%m-%d', validators=[InputRequired()])
+    capacity = IntegerField("Capacity", validators=[InputRequired(), NumberRange(min=50, max=1000)])
+    category = StringField('Category', validators=[InputRequired()])
+    submit = SubmitField("Create")
