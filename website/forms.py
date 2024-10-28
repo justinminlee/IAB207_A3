@@ -39,6 +39,10 @@ class EventForm(FlaskForm):
     capacity = IntegerField("Capacity", validators=[InputRequired(), NumberRange(min=50, max=1000)])
     category = StringField('Category', validators=[InputRequired()])
     submit = SubmitField("Create")
+    
+#User cancel event
+class CancelEvent(FlaskForm):
+    submit = SubmitField('Cancel Event')
 
 #User comment
 class CommentForm(FlaskForm):
