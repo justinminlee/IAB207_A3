@@ -42,4 +42,7 @@ def create_app():
     from . import auth
     app.register_blueprint(auth.auth_bp)
     
+    #Need to import error handling module here
+    #404, 500
+    
     return app
