@@ -1,0 +1,138 @@
+/* General body styling - applies to all pages */
+body {
+    font-family: 'Roboto', sans-serif;  /* Clean, modern font */
+    background-color: #f8f9fa;  /* Light background for readability */
+}
+
+/* Navbar styling for consistency across all pages */
+.navbar {
+    background-color: #1a237e !important; /* Dark blue background for the navbar */
+}
+
+.navbar-brand {
+    font-weight: 700;  /* Make the brand name bold */
+    font-size: 1.5rem; /* Slightly larger font size for the brand name */
+}
+
+/* Jumbotron section */
+.jumbotron {
+    background-image: url('../img/sports-background.jpg');  /* Add a background image for visual appeal */
+    background-size: contain;  /* Ensure the image covers the entire section */
+    background-position: center;  /* Center the image */
+    color: black;  /* Text color set to white for contrast against the background */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  /* Add a subtle shadow to the text for readability */
+}
+
+/* Card hover effect */
+.card {
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight upward motion when hovered */
+}
+
+/* Primary button styling */
+.btn-primary {
+    background-color: #1a237e;  /* Same dark blue as the navbar */
+    border-color: #1a237e;
+}
+
+.btn-primary:hover {
+    background-color: #3949ab;  /* Lighter shade of blue on hover */
+    border-color: #3949ab;
+}
+
+/* Footer styling */
+.footer {
+    background-color: #1a237e;  /* Dark blue background */
+    color: white;  /* White text for contrast */
+    text-align: center;  /* Center the text */
+    padding: 1rem;  /* Add some padding to make the footer content stand out */
+}
+
+.footer a {
+    color: white;  /* Keep footer links white */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;  /* Add underline on hover */
+}
+
+/* Booking history list items */
+.list-group-item {
+    border: 1px solid #ddd;  /* Light border around each item */
+    border-radius: 0.5rem;  /* Rounded corners for a softer look */
+    margin-bottom: 1rem;  /* Space between list items */
+    background-color: #ffffff;  /* White background for each item */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow for a raised effect */
+}
+
+.list-group-item img {
+    border-radius: 0.5rem;  /* Rounded image corners */
+}
+
+/* Event Details Page Specific Styles */
+/* Event image fix */
+.event-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Ensure spacing between booking and highlights sections */
+.booking-section, .event-highlights {
+    margin-bottom: 20px;
+}
+
+/* Footer links */
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Adjusting padding for smaller screens */
+@media (max-width: 768px) {
+    .booking-section, .event-highlights {
+        margin-top: 20px;
+    }
+}
+
+/* Custom card adjustments */
+.card-body {
+    flex-grow: 1;  /* This makes sure the body stretches to take up space */
+    display: flex;
+    flex-direction: column;  /* Aligning items vertically */
+    justify-content: space-between;  /* Spacing the content and button */
+}
+
+.card-body .btn {
+    width: 100%;  /* Full width buttons look neat inside cards */
+    margin-top: auto;  /* Pushes the button to the bottom */
+}
+
+/* Aligning footer with badge at the bottom of the card */
+.card-footer {
+    display: flex;
+    justify-content: center;  /* Center the badge horizontally */
+    align-items: center;  /* Vertically align the badge in the footer */
+    height: 50px;  /* Fixed height for the footer */
+    background-color: #f8f9fa;  /* Light background */
+}
+
+/* Badges styling */
+.badge {
+    padding: 10px 20px;
+    font-size: 0.875rem;
+}
+
+/* Add margin between card text and button */
+.card-text {
+    margin-bottom: 15px;
+}
