@@ -1,140 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sportify - Discover Exciting Sports Events</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="static/style/main.css">
-  </head>
+</head>
 
-  <body>
-    <!-- Custom Navigation Bar -->
+<body>
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container">
-        <a class="navbar-brand" href="#">Sportify</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="create-event.html">Create Event</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="booking-history.html">My Bookings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sign In</a>
-            </li>
-          </ul>
+        <div class="container">
+            <a class="navbar-brand" href="#">Sportify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('main.index') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a></li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
-    <!-- Jumbotron Section for Homepage -->
+    <!-- Jumbotron Section -->
     <header class="jumbotron text-center py-5 mb-4">
-      <div class="container">
-        <h1 class="display-4">Discover Exciting Sports Events</h1>
-        <p class="lead">Join thousands of sports enthusiasts and experience the thrill of live events.</p>
-        <a href="#events" class="btn btn-primary btn-lg">Explore Events</a>
-      </div>
+        <div class="container">
+            <h1 class="display-4">Discover Exciting Sports Events</h1>
+            <p class="lead">Join thousands of sports enthusiasts and experience the thrill of live events.</p>
+            <a href="#events" class="btn btn-primary btn-lg">Explore Events</a>
+        </div>
     </header>
 
-    <!-- Events Section: Fully customized with Bootstrap grid -->
+    <!-- Event Filter and Listing Section -->
     <main>
-      <section id="events" class="container my-5">
-        <h2 class="text-center mb-4">Upcoming Events</h2>
-        <div class="row">
-          <!-- Event 1: Volleyball -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow event-card">
-              <img src="static/img/volleyball.jpg" class="card-img-top" alt="Volleyball Tournament">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">City Volleyball Championship</h5>
-                <p class="card-text">Experience the intense competition as top teams battle for the city title.</p>
-                <p class="card-text mt-auto">
-                  <small class="text-muted">
-                    <i class="bi bi-calendar"></i> Sept 20, 2024 | 
-                    <i class="bi bi-geo-alt"></i> Central Stadium
-                  </small>
-                </p>
-                <a href="event-details.html" class="btn btn-primary custom-btn mt-3">View Details</a>
-              </div>
-              <div class="card-footer">
-                <span class="badge bg-success">Tickets Available</span>
-              </div>
-            </div>
-          </div>
+        <section id="events" class="container my-5">
+            <h2 class="text-center mb-4">Upcoming Events</h2>
 
-          <!-- Event 2: Football -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow event-card">
-              <img src="static/img/football.jpg" class="card-img-top" alt="Football Championship">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">National Football League Finals</h5>
-                <p class="card-text">Witness the culmination of this season's football championship.</p>
-                <p class="card-text mt-auto">
-                  <small class="text-muted">
-                    <i class="bi bi-calendar"></i> Oct 15, 2024 | 
-                    <i class="bi bi-geo-alt"></i> National Arena
-                  </small>
-                </p>
-                <a href="event-details.html" class="btn btn-secondary disabled mt-3">Sold Out</a>
-              </div>
-              <div class="card-footer">
-                <span class="badge bg-danger">Sold Out</span>
-              </div>
+            <!-- Category Filter -->
+            <div class="d-flex justify-content-center mb-3">
+                <form method="GET" action="{{ url_for('main.index') }}" class="form-inline">
+                    <select name="category" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        <!-- Dynamically generate category options -->
+                        {% for category in categories %}
+                            <option value="{{ category }}" {% if request.args.get('category') == category %}selected{% endif %}>{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
             </div>
-          </div>
 
-          <!-- Event 3: Basketball -->
-          <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow event-card">
-              <img src="static/img/basketball.jpg" class="card-img-top" alt="Basketball Showdown">
-              <div class="card-body d-flex flex-column">
-                <h5 class="card-title">International Basketball Showdown</h5>
-                <p class="card-text">An epic clash of titans as international teams compete in this thrilling basketball event.</p>
-                <p class="card-text mt-auto">
-                  <small class="text-muted">
-                    <i class="bi bi-calendar"></i> Nov 5, 2024 | 
-                    <i class="bi bi-geo-alt"></i> Sports Dome
-                  </small>
-                </p>
-                <a href="event-details.html" class="btn btn-primary custom-btn mt-3">Book Now</a>
-              </div>
-              <div class="card-footer">
-                <span class="badge bg-warning text-dark">Selling Fast</span>
-              </div>
+            <div class="row">
+                <!-- Dynamic Event Cards -->
+                {% for event in events %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow event-card">
+                        <img src="{{ event.image }}" class="card-img-top" alt="{{ event.name }}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <p class="card-text">{{ event.description[:100] }}...</p>
+                            <p class="card-text mt-auto">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar"></i> {{ event.datetime.strftime('%b %d, %Y') }} |
+                                    <i class="bi bi-geo-alt"></i> {{ event.location }}
+                                </small>
+                            </p>
+                            <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-primary custom-btn mt-3">View Details</a>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge {% if event.status == 'Open' %}bg-success{% elif event.status == 'Sold Out' %}bg-danger{% elif event.status == 'Cancelled' %}bg-dark{% else %}bg-secondary{% endif %}">
+                                {{ event.status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p class="text-center">No events found in this category.</p>
+                {% endfor %}
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
     </main>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer class="footer text-white text-center py-4">
-      <div class="container">
-        <p>&copy; 2024 Sportify. All rights reserved.</p>
-        <p>
-          <a href="#" class="text-white">Terms of Service</a> | 
-          <a href="#" class="text-white">Privacy Policy</a> | 
-          <a href="#" class="text-white">Contact Us</a>
-        </p>
-      </div>
+        <div class="container">
+            <p>&copy; 2024 Sportify. All rights reserved.</p>
+        </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
 </html>
