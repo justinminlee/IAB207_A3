@@ -46,10 +46,11 @@ def check_file_uploaded(form):
     file_path = form.image.data
     filename = file_path.filename
     BASE_PATH = os.path.dirname(__file__)
-    upload_path = os.path.join(BASE_PATH, 'static/images', secure_filename(filename))
+    upload_path = os.path.join(BASE_PATH, 'static/images', secure_filenameec(filename))
     db_uplaod_path = '/static/img/' + secure_filenameec(filename)
     return db_uplaod_path
 
+#Comment on the event
 @eventbp.route('/<id>/comment', methods=['GET', 'POST'])
 @login_required
 def comment(id):
@@ -61,4 +62,6 @@ def comment(id):
             event = event,
             user = current_user
         )
-    ruturn redirect(url_for('event.show', id=id))
+    return redirect(url_for('event.show', id=id))
+
+
