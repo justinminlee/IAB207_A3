@@ -4,45 +4,51 @@ from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True, nullable = False)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), index=True, unique=True, nullable=False)
     firstname = db.Column(db.String(100), index=True, nullable=False) 
     lastname = db.Column(db.String(100), index=True, nullable=False) 
     emailid = db.Column(db.String(100), index=True, nullable=False) 
-    #password is encrypted in database
-    password_hash = db.column(db.String(255), nullable=False)
-    comments = db.relationship('Comment,', backref='User')
+    password_hash = db.Column(db.String(255), nullable=False)
+    
+    # Relationships
+    comments = db.relationship('Comment', backref='user', lazy=True)
+    bookings = db.relationship('Booking', backref='user', lazy=True)
 
 class Event(db.Model): 
-    __tablename__ = 'event'
-    id = db.Column(db.Integer, primary_key=True, nullable = False)
-    name = db.Column(db.String(80))
-    description = db.Column(db.String(200))
-    image = db.Column(db.String(400))
-    ticketprice = db.Column(db.String(80))
-    #Creates the comments 
-    comments = db.relationship('Comment', backref = 'destination')
-
-    def __rep__(self):
-        return f"Name: {self.name}"
+    __tablename__ = 'events'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image = db.Column(db.String(150), nullable=False)  # Store path to the image
+    price = db.Column(db.Integer, nullable=False)
+    location = db.Column(db.String(150), nullable=False)
+    datetime = db.Column(db.DateTime, nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String(50), nullable=False)
+    status = db.Column(db.String(20), default='Open')  # Open, Inactive, Sold Out, Cancelled
     
+    # Relationships
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    comments = db.relationship('Comment', backref='event', lazy=True)
+    bookings = db.relationship('Booking', backref='event', lazy=True)
+
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(400))
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    # add the foreign keys
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    text = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    
+    # Foreign keys
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
 
-    # string print method
-    def __repr__(self):
-        return f"Comment: {self.text}"
-
-#class User(db.Model, UserMixin):
-
-#class Event(db.Model):
-
-#class Comment(db.Model):
-
-#class Order(db.Model):
+class Booking(db.Model):
+    __tablename__ = 'bookings'
+    id = db.Column(db.Integer, primary_key=True)
+    quantity = db.Column(db.Integer, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    
+    # Foreign keys
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
