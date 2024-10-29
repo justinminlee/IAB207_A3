@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
-from .models import Event, Comment, Booking  # Ensure Booking is added in models
+from .models import Event, Comment, Order  # Ensure Booking is added in models
 from .forms import EventForm, UpdateEventForm, CancelEvent, CommentForm
 from . import db
 import os
@@ -92,13 +92,28 @@ def book(id):
     form = BookingForm()
     event = db.session.scalar(db.select(Event).Where(Event.id == id))
     
-    
+    if form.validate_on_submit():
+        quantity = form.quantity.data
+        total_price = event.price * quantity
+        booked_date = datetime.now()
         
-        
+        new_booking = Order(
+            quantity = quantity,
+            total_price = total_price,
+            booked_date = booked_date,
+            user_id = current_user.id,
+            event_id = id
+        )
+    
+        db.session.add(new_booking)
+        db.session.commit()        
+        flash("Booking Successful! Your Booking ID is here -> {new_booking.id}", "success")
+        return redirect(url_for('event.show', id=id))
+    return render_template('book-tickets.html', form=form, event=event)
     
     
-    
-    
+#The codes below needs to be in the model file.    
+
 # event = db.session.get(Event, id)
 # # Check if the event is open and has capacity
 # if event.status == 'Open' and event.capacity > 0:
