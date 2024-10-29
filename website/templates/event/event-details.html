@@ -1,162 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sportify - Event Details</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="static/style/main.css">
-  </head>
+</head>
 
-  <body>
+<body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container">
-        <a class="navbar-brand" href="#">Sportify</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="create-event.html">Create Event</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="booking-history.html">My Bookings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sign In</a>
-            </li>
-          </ul>
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">Sportify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a></li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
     <!-- Main Content -->
     <main class="container my-5">
-      <div class="row">
-        <!-- Event Details Column -->
-        <div class="col-lg-8 mb-4">
-          <img src="static/img/volleyball-details.jpg" class="img-fluid rounded mb-4" alt="Volleyball Tournament">
-          <h1 class="mb-3">City Volleyball Championship</h1>
-          <p class="lead">Experience the intense competition as top teams battle for the city title in this thrilling volleyball tournament.</p>
-          <div class="mb-4">
-            <p><i class="bi bi-calendar-event me-2"></i> December 20, 2024</p>
-            <p><i class="bi bi-clock me-2"></i> 17:00 - 20:00</p>
-            <p><i class="bi bi-geo-alt me-2"></i> City Sports Complex</p>
-          </div>
-          <h3>Event Description</h3>
-          <p>The City Volleyball Championship features top teams competing for the prestigious title. This event promises a day filled with thrilling matches, spectacular plays, and intense rivalry.</p>
-        </div>
-
-        <!-- Booking Section Column -->
-        <div class="col-lg-4">
-          <!-- Booking Form -->
-          <div class="card mb-4 shadow">
-            <div class="card-body">
-              <h3 class="card-title">Book Your Tickets</h3>
-              <form>
-                <div class="mb-3">
-                  <label for="ticketQuantity" class="form-label">Number of Tickets:</label>
-                  <select class="form-select" id="ticketQuantity">
-                    <option value="">Choose...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
+        <div class="row">
+            <!-- Event Details Column -->
+            <div class="col-lg-8 mb-4">
+                <img src="{{ event.image }}" class="img-fluid rounded mb-4" alt="{{ event.name }}">
+                <h1 class="mb-3">{{ event.name }}</h1>
+                <p class="lead">{{ event.description }}</p>
+                <div class="mb-4">
+                    <p><i class="bi bi-calendar-event me-2"></i> {{ event.datetime.strftime('%B %d, %Y') }}</p>
+                    <p><i class="bi bi-clock me-2"></i> {{ event.datetime.strftime('%I:%M %p') }}</p>
+                    <p><i class="bi bi-geo-alt me-2"></i> {{ event.location }}</p>
+                    <p>
+                        <span class="badge {% if event.status == 'Open' %}bg-success{% elif event.status == 'Sold Out' %}bg-danger{% elif event.status == 'Cancelled' %}bg-dark{% else %}bg-secondary{% endif %}">
+                            {{ event.status }}
+                        </span>
+                    </p>
                 </div>
-                <div class="mb-3">
-                  <label for="ticketType" class="form-label">Ticket Type:</label>
-                  <select class="form-select" id="ticketType">
-                    <option value="">Choose...</option>
-                    <option value="standard">Standard - $30</option>
-                    <option value="vip">VIP - $50</option>
-                  </select>
+                <h3>Event Description</h3>
+                <p>{{ event.description }}</p>
+            </div>
+
+            <!-- Booking Section Column -->
+            <div class="col-lg-4">
+                <div class="card mb-4 shadow">
+                    <div class="card-body">
+                        <h3 class="card-title">Book Your Tickets</h3>
+                        {% if event.status == 'Open' %}
+                        <form action="{{ url_for('event.book', id=event.id) }}" method="POST">
+                            <div class="mb-3">
+                                <label for="ticketQuantity" class="form-label">Number of Tickets:</label>
+                                <input type="number" name="quantity" class="form-control" id="ticketQuantity" min="1" max="{{ event.capacity }}" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Book Now</button>
+                        </form>
+                        {% else %}
+                        <p class="text-danger">Booking is unavailable as this event is {{ event.status }}.</p>
+                        {% endif %}
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Book Now</button>
-              </form>
-            </div>
-          </div>
 
-          <!-- Event Highlights -->
-          <div class="card shadow event-highlights">
-            <div class="card-body">
-              <h3 class="card-title">Event Highlights</h3>
-              <ul class="list-unstyled">
-                <li><i class="bi bi-people me-2"></i> Expected Attendance: 5000+</li>
-                <li><i class="bi bi-trophy me-2"></i> 8 Competing Teams</li>
-                <li><i class="bi bi-star me-2"></i> Featuring Olympic Athletes</li>
-              </ul>
+                <!-- Event Highlights -->
+                <div class="card shadow event-highlights">
+                    <div class="card-body">
+                        <h3 class="card-title">Event Highlights</h3>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-people me-2"></i> Expected Attendance: 5000+</li>
+                            <li><i class="bi bi-trophy me-2"></i> Competing Teams</li>
+                            <li><i class="bi bi-star me-2"></i> Featuring Top Athletes</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
 
-      <!-- Comments Section -->
-      <div class="row mt-5">
-        <div class="col-lg-8">
-          <h3>Comments</h3>
+        <!-- Comments Section -->
+        <div class="row mt-5">
+            <div class="col-lg-8">
+                <h3>Comments</h3>
 
-          <!-- First Comment -->
-          <div class="card mb-3 shadow">
-            <div class="card-body">
-              <h5 class="card-title">John Doe</h5>
-              <p class="card-text">Excited for this tournament! Hope to see some great matches.</p>
-              <p class="card-text"><small class="text-muted">Posted on August 15, 2024</small></p>
+                {% for comment in comments %}
+                <div class="card mb-3 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ comment.user.username }}</h5>
+                        <p class="card-text">{{ comment.text }}</p>
+                        <p class="card-text"><small class="text-muted">Posted on {{ comment.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</small></p>
+                    </div>
+                </div>
+                {% else %}
+                <p>No comments yet. Be the first to comment!</p>
+                {% endfor %}
+
+                <form action="{{ url_for('event.comment', id=event.id) }}" method="POST">
+                    <div class="mb-3">
+                        <label for="commentText" class="form-label">Add a Comment:</label>
+                        <textarea class="form-control" name="text" id="commentText" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Comment</button>
+                </form>
             </div>
-          </div>
-
-          <!-- Second Comment -->
-          <div class="card mb-3 shadow">
-            <div class="card-body">
-              <h5 class="card-title">Jane Smith</h5>
-              <p class="card-text">Just bought my tickets. Looking forward to it!</p>
-              <p class="card-text"><small class="text-muted">Posted on August 20, 2024</small></p>
-            </div>
-          </div>
-
-          <!-- Add Comment Form -->
-          <form id="commentForm">
-            <div class="mb-3">
-              <label for="commentText" class="form-label">Add a Comment:</label>
-              <textarea class="form-control" id="commentText" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit Comment</button>
-          </form>
         </div>
-      </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer text-white text-center py-4 mt-5">
-      <div class="container">
-        <p>&copy; 2024 Sportify. All rights reserved.</p>
-        <p>
-          <a href="#" class="text-white">Terms of Service</a> | 
-          <a href="#" class="text-white">Privacy Policy</a> | 
-          <a href="#" class="text-white">Contact Us</a>
-        </p>
-        <div class="mt-3">
-          <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
-          <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+        <div class="container">
+            <p>&copy; 2024 Sportify. All rights reserved.</p>
         </div>
-      </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+</body>
 </html>
