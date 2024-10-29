@@ -54,6 +54,9 @@ class Comment(db.Model):
     # Foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
+    
+    def __repr__(self):
+        return f'<Comment {self.id}>'
 
 class Order(db.Model):
     __tablename__ = 'orders'
@@ -64,3 +67,6 @@ class Order(db.Model):
     
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey("events.id"), nullable=False)
+    
+    def __repr__(self):
+        return f'<Order {self.id}>'
