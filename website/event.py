@@ -160,7 +160,7 @@ def update(id):
 @eventbp.route('/<int:id>/cancel', methods=['POST'])
 @login_required
 def cancel(id):
-    event = db.session.get(Event, id)
+    event = db.session.scalar(db.Select(Event.where(Event.id == id)))
     if event.user_id == current_user.id:
         event.status = 'Cancelled'
         db.session.commit()
