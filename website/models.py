@@ -1,6 +1,7 @@
 from . import db
 from datetime import datetime
 from flask_login import UserMixin
+from sqlalchemy import Enum
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -13,7 +14,10 @@ class User(db.Model, UserMixin):
     
     # Relationships
     comments = db.relationship('Comment', backref='user', lazy=True)
-    bookings = db.relationship('Booking', backref='user', lazy=True)
+    order = db.relationship('Order', backref='user', lazy=True)
+    
+    def __repr__(self):
+        return f'<User {self.username}>'
 
 class Event(db.Model): 
     __tablename__ = 'events'
@@ -26,12 +30,20 @@ class Event(db.Model):
     datetime = db.Column(db.DateTime, nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String(50), nullable=False)
-    status = db.Column(db.String(20), default='Open')  # Open, Inactive, Sold Out, Cancelled
+    status = db.Column(
+        Enum(
+            'Open', 'Inactive', 'Cancelled','Sold out', name='status of event'
+        ),
+        default='Open',
+        nullable=False)
     
     # Relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     comments = db.relationship('Comment', backref='event', lazy=True)
-    bookings = db.relationship('Booking', backref='event', lazy=True)
+    order = db.relationship('Order', backref='event', lazy=True)
+    
+    def __repr__(self):
+        return f'<Event {self.name}>'
 
 class Comment(db.Model):
     __tablename__ = 'comments'
