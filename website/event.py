@@ -86,39 +86,59 @@ def comment(id):
 # Additional routes to handle booking, updating, and canceling events
 
 # Route to book tickets for an event
-@eventbp.route('/<int:id>/book', methods=['POST'])
+@eventbp.route('/<int:id>/book', methods=['GET','POST'])
 @login_required
 def book(id):
-    event = db.session.get(Event, id)
-    # Check if the event is open and has capacity
-    if event.status == 'Open' and event.capacity > 0:
-        # Update booking capacity and save a Booking record
-        event.capacity -= 1
-        if event.capacity == 0:
-            event.status = 'Sold Out'
-        booking = Booking(user_id=current_user.id, event_id=event.id, quantity=1)  # Adjust as needed
-        db.session.add(booking)
-        db.session.commit()
-        flash("Successfully booked the event!", "success")
-    else:
-        flash("Event is not available for booking.", "error")
-    return redirect(url_for('event.show', id=id))
+    form = BookingForm()
+    event = db.session.scalar(db.select(Event).Where(Event.id == id))
+    
+    
+        
+        
+    
+    
+    
+    
+# event = db.session.get(Event, id)
+# # Check if the event is open and has capacity
+# if event.status == 'Open' and event.capacity > 0:
+#     # Update booking capacity and save a Booking record
+#     event.capacity -= 1
+#     if event.capacity == 0:
+#         event.status = 'Sold Out'
+#     booking = Booking(user_id=current_user.id, event_id=event.id, quantity=1)  # Adjust as needed
+#     db.session.add(booking)
+#     db.session.commit()
+#     flash("Successfully booked the event!", "success")
+# else:
+#     flash("Event is not available for booking.", "error")
+# return redirect(url_for('event.show', id=id))
 
 # Route to update an existing event (accessible to event owner only)
 @eventbp.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 def update(id):
-    event = db.session.get(Event, id)
+    event = db.session.scalar(db.select(Event).Where(Event.id == id))
     if event.user_id != current_user.id:
         flash("You do not have permission to update this event.", "error")
         return redirect(url_for('event.show', id=id))
 
     form = UpdateEventForm(obj=event)
     if form.validate_on_submit():
-        form.populate_obj(event)
+        event.name = form.name.data
+        event.description = form.description.data
+        event.image = form.image.data
+        event.price = form.price.data
+        event.location = form.location.data
+        event.datetime = form.datetime.data
+        event.capacity = form.capacity.data
+        event.category = form.category.data
+        
         db.session.commit()
-        flash("Event updated successfully.", "success")
+        
+        flash("Event Updated Successfully!", "success")
         return redirect(url_for('event.show', id=id))
+        
     return render_template('create-event.html', form=form)
 
 # Route to cancel an event (accessible to event owner only)

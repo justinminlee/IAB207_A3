@@ -19,6 +19,8 @@ class RegisterForm(FlaskForm):
     email_id = StringField("Email Address", validators=[Email("Please enter a valid email")]) 
     password = PasswordField("Password", validators=[InputRequired(), EqualTo('confirm', message="Passwords should match")])
     confirm = PasswordField("Confirm Password")
+    contact_num = StringField("Contact Number", validators=[InputRequired()])
+    address = StringField("Address", validators=[InputRequired()])
     submit = SubmitField("Register")
 
 # Create Event form
