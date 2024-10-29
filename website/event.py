@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from .models import Event, Comment, Order  # Ensure Booking is added in models
-from .forms import EventForm, UpdateEventForm, CancelEvent, CommentForm
+from .forms import EventForm, UpdateEventForm, CancelEvent, CommentForm, BookingForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -42,7 +42,7 @@ def create():
 @eventbp.route('/<int:id>')
 def show(id):
     # Retrieve the event by ID
-    event = db.session.get(Event, id)
+    event = db.session.scalar(db.Select(Event).Where(Event.id == id))
     if not event:
         flash("Event not found.", "error")
         return redirect(url_for('main.index'))
