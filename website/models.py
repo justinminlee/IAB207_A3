@@ -4,7 +4,7 @@ from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable = False)
     username = db.Column(db.String(100), index=True, unique=True, nullable=False)
     firstname = db.Column(db.String(100), index=True, nullable=False) 
     lastname = db.Column(db.String(100), index=True, nullable=False) 
@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
 
 class Event(db.Model): 
     __tablename__ = 'event'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable = False)
     name = db.Column(db.String(80))
     description = db.Column(db.String(200))
     image = db.Column(db.String(400))
