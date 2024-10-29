@@ -60,7 +60,7 @@ def check_file_uploaded(form):
     return f'/static/img/{filename}'  # Path to save in the database
 
 # Route to add comments to an event
-@eventbp.route('/<int:id>/comment', methods=['POST'])
+@eventbp.route('/<int:id>/comment', methods=['GET', 'POST'])
 @login_required
 def comment(id):
     form = CommentForm()
