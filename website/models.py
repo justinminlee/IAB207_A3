@@ -11,6 +11,8 @@ class User(db.Model, UserMixin):
     lastname = db.Column(db.String(100), index=True, nullable=False) 
     emailid = db.Column(db.String(100), index=True, nullable=False) 
     password_hash = db.Column(db.String(255), nullable=False)
+    contact = db.Column(db.String(255), nullable=False)
+    address = db.Column(db.String(150), nullable=False)
     
     # Relationships
     comments = db.relationship('Comment', backref='user', lazy=True)

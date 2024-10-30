@@ -26,19 +26,19 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+            <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('create-details') }}">Create Event</a>
+            <a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('update_event') }}">Update Event</a>
+            <a class="nav-link active" href="{{ url_for('event.update', event_id=event.id) }}">Update Event</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('booking_history') }}">My Bookings</a>
+            <a class="nav-link" href="{{ url_for('user.booking_history') }}">My Bookings</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('login') }}">Sign In</a>
+            <a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a>
           </li>
         </ul>
       </div>
@@ -53,7 +53,7 @@
         <div class="card shadow">
           <div class="card-body">
             {% if event %}
-              <form method="POST" action="{{ url_for('update_event', event_id=event.id) }}" class="needs-validation" novalidate>
+              <form method="POST" action="{{ url_for('event.update', id=event.id) }}" class="needs-validation" novalidate>
                 <div class="row">
                   <!-- Left side of form -->
                   <div class="col-md-6">
@@ -64,8 +64,8 @@
                     </div>
 
                     <div class="mb-3">
-                      <label for="eventType" class="form-label">Event Type</label>
-                      <select class="form-select" id="eventType" name="category" required>
+                      <label for="eventCategory" class="form-label">Category</label>
+                      <select class="form-select" id="eventCategory" name="category" required>
                         <option value="">Choose...</option>
                         <option value="volleyball" {% if event.category == 'volleyball' %}selected{% endif %}>Volleyball</option>
                         <option value="football" {% if event.category == 'football' %}selected{% endif %}>Football</option>
@@ -73,13 +73,13 @@
                         <option value="tennis" {% if event.category == 'tennis' %}selected{% endif %}>Tennis</option>
                         <option value="other" {% if event.category == 'other' %}selected{% endif %}>Other</option>
                       </select>
-                      <div class="invalid-feedback">Please select an event type.</div>
+                      <div class="invalid-feedback">Please select an event category.</div>
                     </div>
 
                     <div class="mb-3">
-                      <label for="eventDate" class="form-label">Event Date</label>
-                      <input type="date" class="form-control" id="eventDate" name="date" value="{{ event.datetime.date() }}" required>
-                      <div class="invalid-feedback">Please select a valid date.</div>
+                      <label for="eventCapacity" class="form-label">Capacity</label>
+                      <input type="number" class="form-control" id="eventCapacity" name="capacity" value="{{ event.capacity }}" required>
+                      <div class="invalid-feedback">Please provide the event capacity.</div>
                     </div>
                   </div>
 
@@ -92,9 +92,9 @@
                     </div>
 
                     <div class="mb-3">
-                      <label for="startTime" class="form-label">Start Time</label>
-                      <input type="time" class="form-control" id="startTime" name="start_time" value="{{ event.datetime.time() }}" required>
-                      <div class="invalid-feedback">Please provide a start time.</div>
+                      <label for="eventDateTime" class="form-label">Date & Time</label>
+                      <input type="datetime-local" class="form-control" id="eventDateTime" name="datetime" value="{{ event.datetime.strftime('%Y-%m-%dT%H:%M') }}" required>
+                      <div class="invalid-feedback">Please provide a valid date and time.</div>
                     </div>
                   </div>
                 </div>

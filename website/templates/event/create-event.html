@@ -11,7 +11,7 @@
       <div class="card shadow">
         <div class="card-body">
           <!-- Event Creation Form -->
-          <form id="createEventForm" method="POST" class="needs-validation" novalidate>
+          <form id="createEventForm" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
             <div class="row">
               <!-- Left Column -->
               <div class="col-md-6">
@@ -22,16 +22,9 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="eventType" class="form-label">Event Type</label>
-                  <select name="type" class="form-select" id="eventType" required>
-                    <option value="">Choose...</option>
-                    <option value="volleyball">Volleyball</option>
-                    <option value="football">Football</option>
-                    <option value="basketball">Basketball</option>
-                    <option value="tennis">Tennis</option>
-                    <option value="other">Other</option>
-                  </select>
-                  <div class="invalid-feedback">Please select an event type.</div>
+                  <label for="eventCategory" class="form-label">Category</label>
+                  <input type="text" name="category" class="form-control" id="eventCategory" required>
+                  <div class="invalid-feedback">Please provide an event category.</div>
                 </div>
 
                 <div class="mb-3">
@@ -51,14 +44,14 @@
 
                 <div class="mb-3">
                   <label for="eventStart" class="form-label">Start Date & Time</label>
-                  <input type="datetime-local" name="start_time" class="form-control" id="eventStart" required>
+                  <input type="datetime-local" name="datetime" class="form-control" id="eventStart" required>
                   <div class="invalid-feedback">Please provide a start date and time.</div>
                 </div>
 
                 <div class="mb-3">
-                  <label for="eventEnd" class="form-label">End Date & Time</label>
-                  <input type="datetime-local" name="end_time" class="form-control" id="eventEnd" required>
-                  <div class="invalid-feedback">Please provide an end date and time.</div>
+                  <label for="eventImage" class="form-label">Event Image</label>
+                  <input type="file" name="image" class="form-control" id="eventImage" required>
+                  <div class="invalid-feedback">Please upload an event image.</div>
                 </div>
               </div>
             </div>
@@ -70,13 +63,8 @@
             </div>
 
             <div class="mb-3">
-              <label for="eventImage" class="form-label">Event Image URL</label>
-              <input type="url" name="image_url" class="form-control" id="eventImage">
-            </div>
-
-            <div class="mb-3">
               <label for="ticketPrice" class="form-label">Ticket Price ($)</label>
-              <input type="number" name="ticket_price" step="0.01" class="form-control" id="ticketPrice" required>
+              <input type="number" name="price" step="0.01" class="form-control" id="ticketPrice" required>
               <div class="invalid-feedback">Please provide a ticket price.</div>
             </div>
 

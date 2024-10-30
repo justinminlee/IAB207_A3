@@ -33,12 +33,12 @@
         <div class="col-md-6">
           <div class="list-group-item mb-3 p-3 shadow-sm">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{{ booking.event_name }}</h5>
+              <h5 class="mb-1">{{ booking.event.name }}</h5>
               <small>Order ID: #{{ booking.id }}</small>
             </div>
             <p class="mb-1">
-              <img src="{{ booking.event_image }}" alt="{{ booking.event_name }}" class="img-thumbnail me-3" width="100">
-              Date: {{ booking.event_date.strftime('%B %d, %Y') }}
+              <img src="{{ booking.event.image }}" alt="{{ booking.event.name }}" class="img-thumbnail me-3" width="100">
+              Date: {{ booking.event.datetime.strftime('%B %d, %Y') }}
             </p>
             <small>Booked on: {{ booking.booked_date.strftime('%B %d, %Y') }}</small>
           </div>
