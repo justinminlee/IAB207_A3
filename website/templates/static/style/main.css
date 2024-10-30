@@ -136,3 +136,10 @@ body {
 .card-text {
     margin-bottom: 15px;
 }
+.custom-btn {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+  }
+  

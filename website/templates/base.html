@@ -1,48 +1,63 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IAB207 Assignment 3</title>
+    <title>{% block title %}IAB207 Assignment 3{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
 </head>
 
 <body>
     <!-- Header -->
     <header>
-
         <!-- Navbar -->
-        <nav>
-            <!-- Your navbar should go here -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="#">Sportify</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('user.booking_history') }}">Booking History</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
-        <!-- Code for using Flask flash -->
+
+        <!-- Flask flash messages -->
         <div class="container-fluid">
             {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">x</button>
-                {{message}}
-            </div>
-            {% endfor %}
-            {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             {% endwith %}
         </div>
-        {% block header %}
-
-        {% endblock %}
-
     </header>
 
-    {% block content %}
+    <!-- Content Block -->
+    {% block content %}{% endblock %}
 
-    {% endblock %}
-
-    <footer class="footer">
-        <!-- Your footer should go here -->
+    <!-- Footer Section -->
+    <footer class="footer text-white text-center py-4">
+        <div class="container">
+            <p>&copy; 2024 Sportify. All rights reserved.</p>
+            <p>
+                <a href="#" class="text-white">Terms of Service</a> |
+                <a href="#" class="text-white">Privacy Policy</a> |
+                <a href="#" class="text-white">Contact Us</a>
+            </p>
+        </div>
     </footer>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
-
 </html>

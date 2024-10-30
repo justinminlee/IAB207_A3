@@ -1,141 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sportify - Create an Event</title>
+{% extends "base.html" %}  <!-- Extend base template for consistency -->
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block title %}Create an Event{% endblock %}
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+{% block content %}
+<main class="container my-5">
+  <h1 class="text-center mb-4">Create an Event</h1>
 
-    <!-- External CSS -->
-    <link rel="stylesheet" href="static/style/main.css">
-  </head>
-
-  <body>
-    <!-- Custom Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container">
-        <a class="navbar-brand" href="#">Sportify</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="create-event.html">Create Event</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="{{ url_for('update_event') }}">Update Event</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="booking-history.html">My Bookings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sign In</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Main Content Section -->
-    <main class="container my-5">
-      <h1 class="text-center mb-4">Create an Event</h1>
-      <div class="row justify-content-center">
-        <div class="col-md-8">
-          <div class="card shadow">
-            <div class="card-body">
-              <form id="createEventForm" class="needs-validation" novalidate>
-                <div class="row">
-                  <!-- Left side of form -->
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="eventName" class="form-label">Event Name</label>
-                      <input type="text" class="form-control" id="eventName" required>
-                      <div class="invalid-feedback">Please provide an event name.</div>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="eventType" class="form-label">Event Type</label>
-                      <select class="form-select" id="eventType" required>
-                        <option value="">Choose...</option>
-                        <option value="volleyball">Volleyball</option>
-                        <option value="football">Football</option>
-                        <option value="basketball">Basketball</option>
-                        <option value="tennis">Tennis</option>
-                        <option value="other">Other</option>
-                      </select>
-                      <div class="invalid-feedback">Please select an event type.</div>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="eventDate" class="form-label">Event Date</label>
-                      <input type="date" class="form-control" id="eventDate" required>
-                      <div class="invalid-feedback">Please select a valid date.</div>
-                    </div>
-                  </div>
-
-                  <!-- Right side of form -->
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="eventLocation" class="form-label">Event Location</label>
-                      <input type="text" class="form-control" id="eventLocation" required>
-                      <div class="invalid-feedback">Please provide an event location.</div>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="startTime" class="form-label">Start Time</label>
-                      <input type="time" class="form-control" id="startTime" required>
-                      <div class="invalid-feedback">Please provide a start time.</div>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="endTime" class="form-label">End Time</label>
-                      <input type="time" class="form-control" id="endTime" required>
-                      <div class="invalid-feedback">Please provide an end time.</div>
-                    </div>
-                  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <!-- Event Creation Form -->
+          <form id="createEventForm" method="POST" class="needs-validation" novalidate>
+            <div class="row">
+              <!-- Left Column -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="eventName" class="form-label">Event Name</label>
+                  <input type="text" name="name" class="form-control" id="eventName" required>
+                  <div class="invalid-feedback">Please provide an event name.</div>
                 </div>
 
                 <div class="mb-3">
-                  <label for="eventDescription" class="form-label">Event Description</label>
-                  <textarea class="form-control" id="eventDescription" rows="3" required></textarea>
-                  <div class="invalid-feedback">Please provide an event description.</div>
+                  <label for="eventType" class="form-label">Event Type</label>
+                  <select name="type" class="form-select" id="eventType" required>
+                    <option value="">Choose...</option>
+                    <option value="volleyball">Volleyball</option>
+                    <option value="football">Football</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <div class="invalid-feedback">Please select an event type.</div>
                 </div>
 
                 <div class="mb-3">
-                  <label for="eventImageUrl" class="form-label">Event Image URL</label>
-                  <input type="url" class="form-control" id="eventImageUrl">
+                  <label for="eventCapacity" class="form-label">Capacity</label>
+                  <input type="number" name="capacity" class="form-control" id="eventCapacity" required>
+                  <div class="invalid-feedback">Please provide the event capacity.</div>
+                </div>
+              </div>
+
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="eventLocation" class="form-label">Event Location</label>
+                  <input type="text" name="location" class="form-control" id="eventLocation" required>
+                  <div class="invalid-feedback">Please provide an event location.</div>
                 </div>
 
-                <button type="submit" class="btn btn-primary custom-btn w-100">Create Event</button>
-              </form>
+                <div class="mb-3">
+                  <label for="eventStart" class="form-label">Start Date & Time</label>
+                  <input type="datetime-local" name="start_time" class="form-control" id="eventStart" required>
+                  <div class="invalid-feedback">Please provide a start date and time.</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="eventEnd" class="form-label">End Date & Time</label>
+                  <input type="datetime-local" name="end_time" class="form-control" id="eventEnd" required>
+                  <div class="invalid-feedback">Please provide an end date and time.</div>
+                </div>
+              </div>
             </div>
-          </div>
+
+            <div class="mb-3">
+              <label for="eventDescription" class="form-label">Event Description</label>
+              <textarea name="description" class="form-control" id="eventDescription" rows="3" required></textarea>
+              <div class="invalid-feedback">Please provide an event description.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="eventImage" class="form-label">Event Image URL</label>
+              <input type="url" name="image_url" class="form-control" id="eventImage">
+            </div>
+
+            <div class="mb-3">
+              <label for="ticketPrice" class="form-label">Ticket Price ($)</label>
+              <input type="number" name="ticket_price" step="0.01" class="form-control" id="ticketPrice" required>
+              <div class="invalid-feedback">Please provide a ticket price.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Create Event</button>
+          </form>
         </div>
       </div>
-    </main>
-
-    <!-- Footer Section -->
-    <footer class="footer text-white text-center py-4">
-      <div class="container">
-        <p>&copy; 2024 Sportify. All rights reserved.</p>
-        <p>
-          <a href="#" class="text-white">Terms of Service</a> | 
-          <a href="#" class="text-white">Privacy Policy</a> | 
-          <a href="#" class="text-white">Contact Us</a>
-        </p>
-      </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+    </div>
+  </div>
+</main>
+{% endblock %}
