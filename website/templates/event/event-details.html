@@ -22,6 +22,9 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('update_event') }}">Update Event</a>
+                      </li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a></li>
                 </ul>
             </div>
