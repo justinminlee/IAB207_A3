@@ -16,8 +16,4 @@ flask-bcrypt
 ### You could make a separate branch and request to push the code but not necessarily :)
 
 
-Category dropdown, update event, search events by title, half of front end stuff 
-
- [ update event, search events by title is on the way ]
-
- NEED TO ADJUST update-event.html
+Category dropdown, half of front end stuff 

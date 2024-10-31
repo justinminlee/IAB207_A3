@@ -43,6 +43,9 @@
             <div class="col-lg-8 mb-4">
                 <img src="{{ event.image }}" class="img-fluid rounded mb-4" alt="{{ event.name }}">
                 <h1 class="mb-3">{{ event.name }}</h1>
+                <br>
+                </br>
+                <h3>Event Description</h3>
                 <p class="lead">{{ event.description }}</p>
                 <div class="mb-4">
                     <p><i class="bi bi-calendar-event me-2"></i> {{ event.datetime.strftime('%B %d, %Y') }}</p>
@@ -54,8 +57,6 @@
                         </span>
                     </p>
                 </div>
-                <h3>Event Description</h3>
-                <p>{{ event.description }}</p>
             </div>
 
             <!-- Booking Section Column -->
