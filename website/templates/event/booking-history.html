@@ -17,6 +17,12 @@
               <img src="{{ booking.event.image }}" alt="{{ booking.event.name }}" class="img-thumbnail me-3" width="100">
               Date: {{ booking.event.datetime.strftime('%B %d, %Y') }}
             </p>
+            <p class="mb-1">
+              Quantity: {{ booking.quantity}}
+              <br>
+            </br>
+              Total Price: ${{ booking.total_price }}
+            </p>
             <small>Booked on: {{ booking.booked_date.strftime('%B %d, %Y') }}</small>
           </div>
         </div>
