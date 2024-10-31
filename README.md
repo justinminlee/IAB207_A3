@@ -16,8 +16,8 @@ flask-bcrypt
 ### You could make a separate branch and request to push the code but not necessarily :)
 
 
-Category dropdown, comments, update event, booking, my booking, search events by title, half of front end stuff, event capacity(check ifs available || or checking the ticket availabilty and update the event status
+Category dropdown, update event, search events by title, half of front end stuff 
 
- [ comment, booking, myevent is done ]
+ [ update event, search events by title is on the way ]
 
- [ update event is on the way ]
+ NEED TO ADJUST update-event.html

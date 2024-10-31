@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, url_for, flash
-from .models import Event, Comment, Order  # Ensure Booking is added in models
+from .models import Event, Comment, Order, User  # Ensure Booking is added in models
 from .forms import EventForm, UpdateEventForm, CancelEvent, CommentForm, BookingForm
 from . import db
 import os
@@ -45,6 +45,7 @@ def create():
 def show(id):
     # Retrieve the event by ID
     event = db.session.scalar(db.Select(Event).where(Event.id == id))
+
     if not event:
         flash("Event not found.", "error")
         return redirect(url_for('main.index'))
@@ -165,11 +166,12 @@ def book(id):
 @eventbp.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 def update(id):
-    event = db.session.scalar(db.select(Event).Where(Event.id == id))
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
     if event.user_id != current_user.id:
         flash("You do not have permission to update this event.", "error")
         return redirect(url_for('event.show', id=id))
 
+    
     form = UpdateEventForm(obj=event)
     if form.validate_on_submit():
         event.name = form.name.data
@@ -182,17 +184,17 @@ def update(id):
         event.category = form.category.data
         
         db.session.commit()
-        
+        print("Method:",request.method)
         flash("Event Updated Successfully!", "success")
         return redirect(url_for('event.show', id=id))
         
-    return render_template('event/create-event.html', form=form)
+    return render_template('event/update-event.html', form=form, event=event)
 
 # Route to cancel an event (accessible to event owner only)
 @eventbp.route('/<int:id>/cancel', methods=['POST'])
 @login_required
 def cancel(id):
-    event = db.session.scalar(db.Select(Event.where(Event.id == id)))
+    event = db.session.scalar(db.Select(Event).where(Event.id == id))
     if event.user_id == current_user.id:
         event.status = 'Cancelled'
         db.session.commit()
@@ -200,6 +202,19 @@ def cancel(id):
     else:
         flash("You do not have permission to cancel this event.", "error")
     return redirect(url_for('event.show', id=id))
+
+
+#Route for search bar
+@eventbp.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query', '')
+    results = Event.query.filter(Event.name.ilike(f"%{query}%")).all()  # Perform a case-insensitive search
+    
+    if not results:
+        flash("No events found matching your search criteria.", "warning")
+        
+    return render_template('event/search_results.html', results=results, query=query)
+
 
 @eventbp.route('/booking_history')
 @login_required

@@ -17,6 +17,27 @@
 
 <body>
     <!-- Main Content -->
+    <div class="container">  
+        <div class="row mt-5 mb-3 justify-content-center text-center">  
+            <div class="col-md-8">  
+                <!-- Bold event title -->
+                <h1 class="mb-0 display-4 font-weight-bold">{{ event.name }}</h1>  
+                <!-- Event description -->
+                <p class="lead">Event Created by {{ event.id }}</p>  
+    
+                <!-- Update and Cancel Event Button for Owner -->
+                {% if current_user.is_authenticated and current_user.id == event.user_id and event.status != 'cancelled' %}
+                <a href="{{ url_for('event.update', id=event.id) }}" class="btn btn-warning mt-3">Update Event</a>
+                <form action="{{ url_for('event.cancel', id=event.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Are you sure you want to cancel this event?');">Cancel Event</button>
+                </form>
+                {% elif event.status == 'cancelled' %}
+                    <p class="text-danger mt-3">This event has been cancelled.</p>
+                {% endif %}
+            </div>  
+        </div>  
+    </div>
+
     <main class="container my-5">
         <div class="row">
             <!-- Event Details Column -->
