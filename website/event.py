@@ -68,19 +68,20 @@ def check_file_uploaded(form):
 @login_required
 def comment(id):
     form = CommentForm()
+    
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    
     if form.validate_on_submit():
-        event = db.session.get(Event, id)
-        if not event:
-            flash("Event not found.", "error")
-            return redirect(url_for('main.index'))
-        
-        # Create a Comment object
         new_comment = Comment(
             text=form.text.data,
             event_id=event.id,
             user_id=current_user.id,
             timestamp=datetime.now()  # Store comment timestamp
         )
+        if not event:
+            flash("Event not found.", "error")
+            return redirect(url_for('main.index'))
+
         # Add and commit the comment to the database
         db.session.add(new_comment)
         db.session.commit()
@@ -92,7 +93,7 @@ def comment(id):
 @login_required
 def my_events():
     events = Event.query.filter_by(user_id=current_user.id).all()
-    return render_template('.html', events=events) # Need to create html for showing user events
+    return render_template('event/my-events.html', events=events) # Need to create html for showing user events
 
 
 # Additional routes to handle booking, updating, and canceling events
@@ -102,26 +103,45 @@ def my_events():
 @login_required
 def book(id):
     form = BookingForm()
-    event = db.session.scalar(db.select(Event).Where(Event.id == id))
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
     
+      # Check if the event has capacity available
+    if event.capacity <= 0:
+        flash("Sorry, this event is sold out.", "danger")
+        return redirect(url_for('event.show', id=id))
+
     if form.validate_on_submit():
         quantity = form.quantity.data
+
+        # Check if the requested quantity exceeds available capacity
+        if quantity > event.capacity:
+            flash(f"Only {event.capacity} tickets are available for this event.", "danger")
+            return redirect(url_for('event.book', id=id))
+
         total_price = event.price * quantity
         booked_date = datetime.now()
-        
+
+        # Create the new booking
         new_booking = Order(
-            quantity = quantity,
-            total_price = total_price,
-            booked_date = booked_date,
-            user_id = current_user.id,
-            event_id = id
+            quantity=quantity,
+            total_price=total_price,
+            booked_date=booked_date,
+            user_id=current_user.id,
+            event_id=id
         )
+
+       
+
+        # Update the event's remaining capacity
+        event.capacity -= quantity
+        if event.capacity <= 0:
+            event.status = 'Sold out'
     
         db.session.add(new_booking)
         db.session.commit()        
         flash("Booking Successful! Your Booking ID is here -> {new_booking.id}", "success")
         return redirect(url_for('event.show', id=id))
-    return render_template('event/book-tickets.html', form=form, event=event)
+    return render_template('event/event-details.html', form=form, event=event)
     
     
 #The codes below needs to be in the model file.    

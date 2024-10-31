@@ -3,8 +3,10 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect 
 
 db = SQLAlchemy()
+csrf = CSRFProtect()
 
 # create a function that creates a web application
 # a web server will run this web application

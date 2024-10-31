@@ -2,63 +2,54 @@
 
 {% block content %}
 <!-- Custom Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
-    <a class="navbar-brand" href="#">Sportify</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('event.create') }}">My Events</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="{{ url_for('user.booking_history') }}">Booking History</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
 <!-- Main Content Section -->
-<main class="container my-5">
-  <h1 class="text-center mb-4">My Events</h1>
-  <div class="row">
-    {% if events %}
+<div class="row">
+  <div class="col-md-12 text-center">
+      <h1>My Event List</h1>
+  </div>
+  {% if events %}
       {% for event in events %}
-        <div class="col-md-6">
-          <div class="list-group-item mb-3 p-3 shadow-sm">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{{ events.event.name }}</h5>
-              <small>Order ID: #{{ event.id }}</small>
-            </div>
-            <p class="mb-1">
-              <img src="{{ events.event.image }}" alt="{{ events.event.name }}" class="img-thumbnail me-3" width="100">
-              Date: {{ events.event.datetime.strftime('%B %d, %Y') }}
-            </p>
-            <small>Created on: {{ events.booked_date.strftime('%B %d, %Y') }}</small>
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      <p class="text-center">No events found.</p>
-    {% endif %}
-  </div>
-</main>
+      <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow event-card">
+              <!-- Event Image -->
+              <img src="{{ event.image }}" class="card-img-top" alt="{{ event.name }}">
+              
+              <div class="card-body d-flex flex-column">
+                  <!-- Event Name and Description -->
+                  <h5 class="card-title">{{ event.name }}</h5>
+                  <p class="card-text">{{ event.description[:100] }}...</p>
 
-<!-- Footer Section -->
-<footer class="footer text-white text-center py-4">
-  <div class="container">
-    <p>&copy; 2024 Sportify. All rights reserved.</p>
-  </div>
-</footer>
+                  <!-- Event Date and Location -->
+                  <p class="card-text mt-auto">
+                      <small class="text-muted">
+                          <i class="bi bi-calendar"></i> {{ event.datetime.strftime('%b %d, %Y') }} |
+                          <i class="bi bi-geo-alt"></i> {{ event.location }}
+                      </small>
+                  </p>
+
+                  <!-- Link to Event Details Page -->
+                  <a href="{{ url_for('event.show', id=event.id) }}" 
+                     class="btn btn-primary custom-btn mt-3">View Details</a>
+              </div>
+
+              <div class="card-footer">
+                  <!-- Badge indicating event status -->
+                  <span class="badge 
+                      {% if event.status == 'Open' %}bg-success
+                      {% elif event.status == 'Sold Out' %}bg-danger
+                      {% elif event.status == 'Cancelled' %}bg-dark
+                      {% else %}bg-secondary{% endif %}">
+                      {{ event.status }}
+                  </span>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+  {% else %}
+      <p class="text-center">No events found.</p>
+  {% endif %}
+</div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
