@@ -5,18 +5,29 @@ from . import db
 # Define the main blueprint for the main pages
 main_bp = Blueprint('main', __name__)
 
-# Route for the homepage
 @main_bp.route('/')
 def index():
-    # Get the category filter from the query string, if any
-    category = request.args.get('category')
-    
-    # Query for events, filtering by category if provided
-    if category:
+    # List of categories for the dropdown
+    categories = [
+        'soccer', 'basketball', 'tennis', 'cricket', 'swimming', 'athletics',
+        'rugby', 'golf', 'cycling', 'boxing', 'martial_arts', 'esports',
+        'badminton', 'volleyball', 'baseball', 'hockey', 'gymnastics',
+        'motorsport', 'squash', 'table_tennis', 'other'
+    ]
+
+    # Get the selected category from the query parameters, default to 'all'
+    category = request.args.get('category', 'all')
+
+    # Filter events by category if a specific category is selected
+    if category != 'all':
         events = Event.query.filter_by(category=category).all()
     else:
         events = Event.query.all()
-    
-    # Render the index template, passing the list of events and selected category
-    return render_template('index.html', events=events, selected_category=category)
 
+    # Render the index template, passing the list of events, categories, and selected category
+    return render_template(
+        'index.html',
+        events=events,
+        categories=categories,
+        selected_category=category
+    )
