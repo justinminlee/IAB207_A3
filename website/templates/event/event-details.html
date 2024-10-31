@@ -48,6 +48,7 @@
                 <h3>Event Description</h3>
                 <p class="lead">{{ event.description }}</p>
                 <div class="mb-4">
+                    <p><i class="bi bi-calendar-event me-2"></i> {{ event.price }}</p>
                     <p><i class="bi bi-calendar-event me-2"></i> {{ event.datetime.strftime('%B %d, %Y') }}</p>
                     <p><i class="bi bi-clock me-2"></i> {{ event.datetime.strftime('%I:%M %p') }}</p>
                     <p><i class="bi bi-geo-alt me-2"></i> {{ event.location }}</p>
