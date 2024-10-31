@@ -23,7 +23,6 @@
                 <!-- Bold event title -->
                 <h1 class="mb-0 display-4 font-weight-bold">{{ event.name }}</h1>  
                 <!-- Event description -->
-                <p class="lead">Event Created by {{ event.id }}</p>  
     
                 <!-- Update and Cancel Event Button for Owner -->
                 {% if current_user.is_authenticated and current_user.id == event.user_id and event.status != 'cancelled' %}

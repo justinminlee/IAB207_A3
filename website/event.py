@@ -170,21 +170,23 @@ def update(id):
     if event.user_id != current_user.id:
         flash("You do not have permission to update this event.", "error")
         return redirect(url_for('event.show', id=id))
-
     
-    form = UpdateEventForm(obj=event)
+    form = UpdateEventForm()
+    
     if form.validate_on_submit():
         event.name = form.name.data
         event.description = form.description.data
-        event.image = form.image.data
         event.price = form.price.data
         event.location = form.location.data
         event.datetime = form.datetime.data
         event.capacity = form.capacity.data
         event.category = form.category.data
         
+        if form.image.data:
+            db_file_path = check_file_uploaded(form)
+            event.image = db_file_path
+        
         db.session.commit()
-        print("Method:",request.method)
         flash("Event Updated Successfully!", "success")
         return redirect(url_for('event.show', id=id))
         
