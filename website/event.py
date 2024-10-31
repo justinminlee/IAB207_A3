@@ -177,9 +177,9 @@ def cancel(id):
         flash("You do not have permission to cancel this event.", "error")
     return redirect(url_for('event.show', id=id))
 
-@eventbp.route('/booking-history')
+@eventbp.route('/booking_history')
 @login_required
 def booking_history():
-    bookings = db.session.scalar(db.select(Order).where(Order.user_id == current_user.id)).all()
+    bookings = db.session.query(Order).filter_by(user_id=current_user.id).all()
      
     return render_template('event/booking-history.html', bookings=bookings)
