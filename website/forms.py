@@ -34,7 +34,29 @@ class EventForm(FlaskForm):
     location = StringField('Location', validators=[InputRequired()])
     datetime = DateTimeField('Event Date (DD/MM/YYYY hh:mm AM/PM)', validators=[InputRequired()], format='%d/%m/%Y %I:%M %p')
     capacity = IntegerField("Capacity", validators=[InputRequired(), NumberRange(min=1, message="Capacity must be greater than 0")])
-    category = StringField('Category', validators=[InputRequired()])
+    category = SelectField('Category', choices=
+                            [('soccer', 'Soccer'),
+                             ('basketball', 'Basketball'),
+                             ('tennis', 'Tennis'),
+                             ('cricket', 'Cricket'),
+                             ('swimming', 'Swimming'),
+                             ('athletics', 'Athletics'),
+                             ('rugby', 'Rugby'),
+                             ('golf', 'Golf'),
+                             ('cycling', 'Cycling'),
+                             ('boxing', 'Boxing'),
+                             ('martial_arts', 'Martial Arts'),
+                             ('esports', 'Esports'),
+                             ('badminton', 'Badminton'),
+                             ('volleyball', 'Volleyball'),
+                             ('baseball', 'Baseball'),
+                             ('hockey', 'Hockey'),
+                             ('gymnastics', 'Gymnastics'),
+                             ('motorsport', 'Motorsport'),
+                             ('squash', 'Squash'),
+                             ('table_tennis', 'Table Tennis'),
+                             ('other', 'Other'),],
+                           validators=[InputRequired()])
     submit = SubmitField("Create")
 
 # Update Event form
@@ -48,7 +70,29 @@ class UpdateEventForm(FlaskForm):
     location = StringField('Location', validators=[InputRequired()])
     datetime = DateTimeField('Event Date (DD/MM/YYYY hh:mm AM/PM)', validators=[InputRequired()], format='%d/%m/%Y %I:%M %p')
     capacity = IntegerField("Capacity", validators=[InputRequired(), NumberRange(min=1, message="Capacity must be greater than 0")])
-    category = StringField('Category', validators=[InputRequired()])
+    category = SelectField('Category', choices=
+                            [('soccer', 'Soccer'),
+                             ('basketball', 'Basketball'),
+                             ('tennis', 'Tennis'),
+                             ('cricket', 'Cricket'),
+                             ('swimming', 'Swimming'),
+                             ('athletics', 'Athletics'),
+                             ('rugby', 'Rugby'),
+                             ('golf', 'Golf'),
+                             ('cycling', 'Cycling'),
+                             ('boxing', 'Boxing'),
+                             ('martial_arts', 'Martial Arts'),
+                             ('esports', 'Esports'),
+                             ('badminton', 'Badminton'),
+                             ('volleyball', 'Volleyball'),
+                             ('baseball', 'Baseball'),
+                             ('hockey', 'Hockey'),
+                             ('gymnastics', 'Gymnastics'),
+                             ('motorsport', 'Motorsport'),
+                             ('squash', 'Squash'),
+                             ('table_tennis', 'Table Tennis'),
+                             ('other', 'Other'),],
+                           validators=[InputRequired()])
     submit = SubmitField("Update Event")
 
 # Cancel Event form

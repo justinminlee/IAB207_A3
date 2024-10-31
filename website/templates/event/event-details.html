@@ -49,9 +49,9 @@
                 <p class="lead">{{ event.description }}</p>
                 <div class="mb-4">
                     <p><i class="bi bi-calendar-event me-2"></i>Ticket Price : <strong>${{ event.price }}</strong></p>
-                    <p><i class="bi bi-calendar-event me-2"></i> {{ event.datetime.strftime('%B %d, %Y') }}</p>
-                    <p><i class="bi bi-clock me-2"></i> {{ event.datetime.strftime('%I:%M %p') }}</p>
-                    <p><i class="bi bi-geo-alt me-2"></i> {{ event.location }}</p>
+                    <p><i class="bi bi-calendar-event me-2"></i>Event Date : <strong>{{ event.datetime.strftime('%B %d, %Y') }}</strong></p>
+                    <p><i class="bi bi-clock me-2"></i>Event Time : <strong>{{ event.datetime.strftime('%I:%M %p') }}</strong></p>
+                    <p><i class="bi bi-geo-alt me-2"></i>Location :  <strong>{{ event.location }}</strong></p>
                     <p>
                         <span class="badge {% if event.status == 'Open' %}bg-success{% elif event.status == 'Sold Out' %}bg-danger{% elif event.status == 'Cancelled' %}bg-dark{% else %}bg-secondary{% endif %}">
                             {{ event.status }}

@@ -143,24 +143,6 @@ def book(id):
         flash("Booking Successful! Your Booking ID is here -> {new_booking.id}", "success")
         return redirect(url_for('event.show', id=id))
     return render_template('event/event-details.html', form=form, event=event)
-    
-    
-#The codes below needs to be in the model file.    
-
-# event = db.session.get(Event, id)
-# # Check if the event is open and has capacity
-# if event.status == 'Open' and event.capacity > 0:
-#     # Update booking capacity and save a Booking record
-#     event.capacity -= 1
-#     if event.capacity == 0:
-#         event.status = 'Sold Out'
-#     booking = Booking(user_id=current_user.id, event_id=event.id, quantity=1)  # Adjust as needed
-#     db.session.add(booking)
-#     db.session.commit()
-#     flash("Successfully booked the event!", "success")
-# else:
-#     flash("Event is not available for booking.", "error")
-# return redirect(url_for('event.show', id=id))
 
 # Route to update an existing event (accessible to event owner only)
 @eventbp.route('/<int:id>/update', methods=['GET', 'POST'])
@@ -217,7 +199,27 @@ def search():
         
     return render_template('event/search_results.html', results=results, query=query)
 
+# Route to view events by category
+@eventbp.route('/view_by_category', methods=['GET'])
+def view_by_category():
+    categories = [
+        'soccer', 'basketball', 'tennis', 'cricket', 'swimming', 'athletics',
+        'rugby', 'golf', 'cycling', 'boxing', 'martial_arts', 'esports',
+        'badminton', 'volleyball', 'baseball', 'hockey', 'gymnastics',
+        'motorsport', 'squash', 'table_tennis', 'other'
+    ]
+    print("Categories in dropdown:", categories)
 
+    selected_category = request.args.get('category', 'all')
+
+    if selected_category != 'all':
+        events = Event.query.filter_by(category=selected_category).all()
+    else:
+        events = Event.query.all()  
+
+    return render_template('event/view_by_category.html', events=events, categories=categories, selected_category=selected_category)
+
+# Route to view event details
 @eventbp.route('/booking_history')
 @login_required
 def booking_history():
