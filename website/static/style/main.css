@@ -7,6 +7,8 @@ body {
 /* Navbar styling for consistency across all pages */
 .navbar {
     background-color: #1a237e !important; /* Dark blue background for the navbar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    height: 60px; /* Reduce height slightly for a slimmer navbar */
 }
 
 .navbar-brand {
@@ -14,32 +16,57 @@ body {
     font-size: 1.5rem; /* Slightly larger font size for the brand name */
 }
 
+/* Search bar styling */
+.navbar .form-control {
+    border-radius: 20px; /* Rounded corners for a modern look */
+    height: 35px; /* Reduce height to match navbar */
+}
+
+/* Hero Section (Jumbotron) */
 .jumbotron {
-    background-image: url('../img/sports-background.jpg');
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../img/sports-background.jpg');
     background-size: cover;
     background-position: center;
-    color: black;
+    color: white; /* White color for better contrast */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Card hover effect */
 .card {
     transition: transform 0.2s; /* Smooth transition for hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a raised effect */
 }
 
 .card:hover {
-    transform: translateY(-5px); /* Slight upward motion when hovered */
+    transform: translateY(-3px); /* Slightly smaller upward motion */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Softer shadow on hover */
+}
+
+/* Text truncation to prevent overflow */
+.card-title, .card-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Dropdown styling */
+.dropdown {
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Primary button styling */
 .btn-primary {
     background-color: #1a237e;  /* Same dark blue as the navbar */
     border-color: #1a237e;
+    border-radius: 5px; /* Slightly rounded corners */
 }
 
 .btn-primary:hover {
     background-color: #3949ab;  /* Lighter shade of blue on hover */
     border-color: #3949ab;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Light shadow on hover */
 }
 
 /* Footer styling */
@@ -53,6 +80,8 @@ body {
 .footer a {
     color: white;  /* Keep footer links white */
     text-decoration: none;
+    padding: 0 8px; /* Add spacing between links */
+    font-size: 0.9rem; /* Slightly smaller font size */
 }
 
 .footer a:hover {
@@ -101,6 +130,9 @@ body {
     .booking-section, .event-highlights {
         margin-top: 20px;
     }
+    .jumbotron {
+        font-size: 1rem; /* Smaller font size for mobile screens */
+    }
 }
 
 /* Custom card adjustments */
@@ -135,10 +167,11 @@ body {
 .card-text {
     margin-bottom: 15px;
 }
+
+/* Custom button styling */
 .custom-btn {
     background-color: #007bff;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-  }
-  
+}
