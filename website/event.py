@@ -36,7 +36,7 @@ def create():
         db.session.commit()
         flash("New Event Created Successfully", 'success')
         return redirect(url_for('main.index'))  # Redirect to the homepage or event listing
-    return render_template('create-event.html', form=form)  # Specify the correct template
+    return render_template('event/create-event.html', form=form)  # Specify the correct template
 
 # Route to show event details, including comments
 @eventbp.route('/<int:id>')
@@ -49,7 +49,7 @@ def show(id):
     
     form = CommentForm()
     comments = Comment.query.filter_by(event_id=id).all()  # Fetch comments related to this event
-    return render_template('event-details.html', event=event, form=form, comments=comments)  # Render event details
+    return render_template('event/event-details.html', event=event, form=form, comments=comments)  # Render event details
 
 # Helper function to handle file upload securely
 def check_file_uploaded(form):
@@ -83,12 +83,12 @@ def comment(id):
         flash("Comment posted successfully.", "success")
     return redirect(url_for('event.show', id=id))
 
-# #Show users events
-# @event.bp.route('/myevents')
-# @login_required
-# def my_events():
-#     events = Event.query.filter_by(user_id=current_user.id).all()
-#     return render_template('.html', events=events) # Need to create html for showing user events
+#Show users events
+@eventbp.route('/myevents')
+@login_required
+def my_events():
+    events = Event.query.filter_by(user_id=current_user.id).all()
+    return render_template('.html', events=events) # Need to create html for showing user events
 
 
 # Additional routes to handle booking, updating, and canceling events
@@ -117,7 +117,7 @@ def book(id):
         db.session.commit()        
         flash("Booking Successful! Your Booking ID is here -> {new_booking.id}", "success")
         return redirect(url_for('event.show', id=id))
-    return render_template('book-tickets.html', form=form, event=event)
+    return render_template('event/book-tickets.html', form=form, event=event)
     
     
 #The codes below needs to be in the model file.    
@@ -162,7 +162,7 @@ def update(id):
         flash("Event Updated Successfully!", "success")
         return redirect(url_for('event.show', id=id))
         
-    return render_template('create-event.html', form=form)
+    return render_template('event/create-event.html', form=form)
 
 # Route to cancel an event (accessible to event owner only)
 @eventbp.route('/<int:id>/cancel', methods=['POST'])
