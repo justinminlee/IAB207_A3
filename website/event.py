@@ -199,26 +199,6 @@ def search():
         
     return render_template('event/search_results.html', results=results, query=query)
 
-# Route to view events by category
-@eventbp.route('/view_by_category', methods=['GET'])
-def view_by_category():
-    categories = [
-        'soccer', 'basketball', 'tennis', 'cricket', 'swimming', 'athletics',
-        'rugby', 'golf', 'cycling', 'boxing', 'martial_arts', 'esports',
-        'badminton', 'volleyball', 'baseball', 'hockey', 'gymnastics',
-        'motorsport', 'squash', 'table_tennis', 'other'
-    ]
-    print("Categories in dropdown:", categories)
-
-    selected_category = request.args.get('category', 'all')
-
-    if selected_category != 'all':
-        events = Event.query.filter_by(category=selected_category).all()
-    else:
-        events = Event.query.all()  
-
-    return render_template('event/view_by_category.html', events=events, categories=categories, selected_category=selected_category)
-
 # Route to view event details
 @eventbp.route('/booking_history')
 @login_required
