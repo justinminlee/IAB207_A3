@@ -140,7 +140,7 @@ def book(id):
     
         db.session.add(new_booking)
         db.session.commit()        
-        flash("Booking Successful! Your Booking ID is here -> {new_booking.id}", "success")
+        flash("Booking Successful!", "success")
         return redirect(url_for('event.show', id=id))
     return render_template('event/event-details.html', form=form, event=event)
 
