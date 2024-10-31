@@ -83,12 +83,12 @@ def comment(id):
         flash("Comment posted successfully.", "success")
     return redirect(url_for('event.show', id=id))
 
-#Show users events
-@event.bp.route('/myevents')
-@login_required
-def my_events():
-    events = Event.query.filter_by(user_id=current_user.id).all()
-    return render_template('.html', events=events) # Need to create html for showing user events
+# #Show users events
+# @event.bp.route('/myevents')
+# @login_required
+# def my_events():
+#     events = Event.query.filter_by(user_id=current_user.id).all()
+#     return render_template('.html', events=events) # Need to create html for showing user events
 
 
 # Additional routes to handle booking, updating, and canceling events
