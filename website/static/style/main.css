@@ -14,13 +14,12 @@ body {
     font-size: 1.5rem; /* Slightly larger font size for the brand name */
 }
 
-/* Jumbotron section */
 .jumbotron {
-    background-image: url('../img/sports-background.jpg');  /* Add a background image for visual appeal */
-    background-size: contain;  /* Ensure the image covers the entire section */
-    background-position: center;  /* Center the image */
-    color: black;  /* Text color set to white for contrast against the background */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  /* Add a subtle shadow to the text for readability */
+    background-image: url('../img/sports-background.jpg');
+    background-size: cover;
+    background-position: center;
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Card hover effect */

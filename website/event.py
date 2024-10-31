@@ -15,6 +15,7 @@ eventbp = Blueprint('event', __name__, url_prefix='/event')
 @login_required
 def create():
     form = EventForm()
+    print('Method', request.method)
     if form.validate_on_submit():
         # Securely save uploaded file and get the database path
         db_file_path = check_file_uploaded(form)
@@ -25,24 +26,25 @@ def create():
             image=db_file_path,  # Store image path in database
             price=form.price.data,
             location=form.location.data,
-            datetime=datetime.strptime(form.datetime.data, '%d/%m/%Y %I:%M %p'),
+            datetime=form.datetime.data,
             capacity=form.capacity.data,
             category=form.category.data,
             status='Open',  # Default status
             user_id=current_user.id
         )
+        print('Method', request.method)
         # Add and commit the new event to the database
         db.session.add(event)
         db.session.commit()
         flash("New Event Created Successfully", 'success')
-        return redirect(url_for('main.index'))  # Redirect to the homepage or event listing
+        return redirect(url_for('event.create'))  # Redirect to the homepage or event listing
     return render_template('event/create-event.html', form=form)  # Specify the correct template
 
 # Route to show event details, including comments
 @eventbp.route('/<int:id>')
 def show(id):
     # Retrieve the event by ID
-    event = db.session.scalar(db.Select(Event).Where(Event.id == id))
+    event = db.session.scalar(db.Select(Event).where(Event.id == id))
     if not event:
         flash("Event not found.", "error")
         return redirect(url_for('main.index'))
@@ -53,11 +55,13 @@ def show(id):
 
 # Helper function to handle file upload securely
 def check_file_uploaded(form):
-    file = form.image.data
-    filename = secure_filename(file.filename)
-    upload_path = os.path.join('static/img', filename)  # Save to static/img folder
-    file.save(upload_path)
-    return f'/static/img/{filename}'  # Path to save in the database
+    fp = form.image.data
+    filename = fp.filename
+    BASE_PATH = os.path.dirname(__file__)
+    upload_path = os.path.join(BASE_PATH, 'static/img', secure_filename(filename))
+    db_upload_path = '/static/img/' + secure_filename(filename)
+    fp.save(upload_path)  # Save the file to the specified path
+    return db_upload_path  # Return the database path to store the image
 
 # Route to add comments to an event
 @eventbp.route('/<int:id>/comment', methods=['GET', 'POST'])

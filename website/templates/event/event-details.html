@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,25 +14,6 @@
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('main.index') }}">Sportify</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url_for('event.create') }}">My Events</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a></li>
-                    
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <!-- Main Content -->
     <main class="container my-5">
         <div class="row">
@@ -70,18 +54,6 @@
                         {% endif %}
                     </div>
                 </div>
-
-                <!-- Event Highlights -->
-                <div class="card shadow event-highlights">
-                    <div class="card-body">
-                        <h3 class="card-title">Event Highlights</h3>
-                        <ul class="list-unstyled">
-                            <li><i class="bi bi-people me-2"></i> Expected Attendance: 5000+</li>
-                            <li><i class="bi bi-trophy me-2"></i> Competing Teams</li>
-                            <li><i class="bi bi-star me-2"></i> Featuring Top Athletes</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -120,130 +92,9 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sportify - Event Details</title>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/style/main.css">
-</head>
-
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('main.index') }}">Sportify</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Sign In</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="container my-5">
-        <div class="row">
-            <!-- Event Details Column -->
-            <div class="col-lg-8 mb-4">
-                <img src="{{ event.image }}" class="img-fluid rounded mb-4" alt="{{ event.name }}">
-                <h1 class="mb-3">{{ event.name }}</h1>
-                <p class="lead">{{ event.description }}</p>
-                <div class="mb-4">
-                    <p><i class="bi bi-calendar-event me-2"></i> {{ event.datetime.strftime('%B %d, %Y') }}</p>
-                    <p><i class="bi bi-clock me-2"></i> {{ event.datetime.strftime('%I:%M %p') }}</p>
-                    <p><i class="bi bi-geo-alt me-2"></i> {{ event.location }}</p>
-                    <p>
-                        <span class="badge {% if event.status == 'Open' %}bg-success{% elif event.status == 'Sold Out' %}bg-danger{% elif event.status == 'Cancelled' %}bg-dark{% else %}bg-secondary{% endif %}">
-                            {{ event.status }}
-                        </span>
-                    </p>
-                </div>
-                <h3>Event Description</h3>
-                <p>{{ event.description }}</p>
-            </div>
-
-            <!-- Booking Section Column -->
-            <div class="col-lg-4">
-                <div class="card mb-4 shadow">
-                    <div class="card-body">
-                        <h3 class="card-title">Book Your Tickets</h3>
-                        {% if event.status == 'Open' %}
-                        <form action="{{ url_for('event.book', id=event.id) }}" method="POST">
-                            <div class="mb-3">
-                                <label for="ticketQuantity" class="form-label">Number of Tickets:</label>
-                                <input type="number" name="quantity" class="form-control" id="ticketQuantity" min="1" max="{{ event.capacity }}" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Book Now</button>
-                        </form>
-                        {% else %}
-                        <p class="text-danger">Booking is unavailable as this event is {{ event.status }}.</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <!-- Event Highlights -->
-                <div class="card shadow event-highlights">
-                    <div class="card-body">
-                        <h3 class="card-title">Event Highlights</h3>
-                        <ul class="list-unstyled">
-                            <li><i class="bi bi-people me-2"></i> Expected Attendance: 5000+</li>
-                            <li><i class="bi bi-trophy me-2"></i> Competing Teams</li>
-                            <li><i class="bi bi-star me-2"></i> Featuring Top Athletes</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Comments Section -->
-        <div class="row mt-5">
-            <div class="col-lg-8">
-                <h3>Comments</h3>
-
-                {% for comment in comments %}
-                <div class="card mb-3 shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ comment.user.username }}</h5>
-                        <p class="card-text">{{ comment.text }}</p>
-                        <p class="card-text"><small class="text-muted">Posted on {{ comment.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</small></p>
-                    </div>
-                </div>
-                {% else %}
-                <p>No comments yet. Be the first to comment!</p>
-                {% endfor %}
-
-                <form action="{{ url_for('event.comment', id=event.id) }}" method="POST">
-                    <div class="mb-3">
-                        <label for="commentText" class="form-label">Add a Comment:</label>
-                        <textarea class="form-control" name="text" id="commentText" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Comment</button>
-                </form>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer text-white text-center py-4 mt-5">
-        <div class="container">
-            <p>&copy; 2024 Sportify. All rights reserved.</p>
-        </div>
-    </footer>
-
+  
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+{% endblock %}

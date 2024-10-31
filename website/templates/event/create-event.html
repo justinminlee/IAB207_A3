@@ -1,78 +1,17 @@
-{% extends "base.html" %}  <!-- Extend base template for consistency -->
+{% extends "base.html" %} 
 
-{% block title %}Create an Event{% endblock %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-<main class="container my-5">
-  <h1 class="text-center mb-4">Create an Event</h1>
 
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow">
-        <div class="card-body">
-          <!-- Event Creation Form -->
-          <form id="createEventForm" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-            <div class="row">
-              <!-- Left Column -->
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="eventName" class="form-label">Event Name</label>
-                  <input type="text" name="name" class="form-control" id="eventName" required>
-                  <div class="invalid-feedback">Please provide an event name.</div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="eventCategory" class="form-label">Category</label>
-                  <input type="text" name="category" class="form-control" id="eventCategory" required>
-                  <div class="invalid-feedback">Please provide an event category.</div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="eventCapacity" class="form-label">Capacity</label>
-                  <input type="number" name="capacity" class="form-control" id="eventCapacity" required>
-                  <div class="invalid-feedback">Please provide the event capacity.</div>
-                </div>
-              </div>
-
-              <!-- Right Column -->
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="eventLocation" class="form-label">Event Location</label>
-                  <input type="text" name="location" class="form-control" id="eventLocation" required>
-                  <div class="invalid-feedback">Please provide an event location.</div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="eventStart" class="form-label">Start Date & Time</label>
-                  <input type="datetime-local" name="datetime" class="form-control" id="eventStart" required>
-                  <div class="invalid-feedback">Please provide a start date and time.</div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="eventImage" class="form-label">Event Image</label>
-                  <input type="file" name="image" class="form-control" id="eventImage" required>
-                  <div class="invalid-feedback">Please upload an event image.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="eventDescription" class="form-label">Event Description</label>
-              <textarea name="description" class="form-control" id="eventDescription" rows="3" required></textarea>
-              <div class="invalid-feedback">Please provide an event description.</div>
-            </div>
-
-            <div class="mb-3">
-              <label for="ticketPrice" class="form-label">Ticket Price ($)</label>
-              <input type="number" name="price" step="0.01" class="form-control" id="ticketPrice" required>
-              <div class="invalid-feedback">Please provide a ticket price.</div>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100">Create Event</button>
-          </form>
-        </div>
-      </div>
+<div class='container'>
+  <div class='row mt-5'>
+    <div class='col-md-10'>
+      <h2>Create an Event</h2>
+      <p>Enter the Title of the Event</p>
+      {{ render_form(form) }}
     </div>
   </div>
-</main>
+</div>
+
 {% endblock %}
