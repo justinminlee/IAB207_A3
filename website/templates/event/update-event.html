@@ -32,7 +32,7 @@
             <a class="nav-link" href="{{ url_for('event.create') }}">Create Event</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url_for('event.update', event_id=event.id) }}">Update Event</a>
+            <a class="nav-link active" href="{{ url_for('create.event', event_id=event.id) }}">My Events</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('user.booking_history') }}">My Bookings</a>
