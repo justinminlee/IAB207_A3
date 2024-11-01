@@ -1,0 +1,116 @@
+Agarg4941 (5):
+      Trial
+      changes in the html files
+      changes in the html files
+      db
+      d
+
+Justin Lee (57):
+      Initial Commit
+      Update README
+      Update README
+      Update README
+      Update README
+      Update DS
+      Update html files
+      sql files needs to be created
+      Update auth
+      Update forms code
+      Update forms
+      Update forms, and views
+      Comments in models.py
+      Commented out models
+      Update form.py
+      Update form.py
+      Update form.py
+      add comment on init.py
+      Update codes + add event.py
+      Update event.py
+      update init.py
+      Fix event.py
+      Fix forms, and event.py
+      models, event, form is done
+      Update 404
+      Init.py handling error
+      Event.py almost done
+      Update init and error handling
+      Update error.html
+      error.html done
+      __init__.py done
+      Update models 90% fixed
+      model.py almost done
+      update front-end and auth
+      Updaet auth, event, and html
+      Update auth.py
+      event.py fixed
+      ignore pycache
+      Update booking history
+      fix booking history
+      FIxed the booking history done
+      Fixed creating events done
+      Comment, booking, myevent is fixed done
+      cancel event done
+      Update event, cancel event done
+      Fix booking history page done
+      Fixed event detail page
+      Fixed main.css
+      Fixed design in home, create, booking
+      Add price on the event details
+      Adjust ticket price section on event details
+      have to fix categories
+      Fixed Dummy datas for events, adjust backends
+      Edited comments and events for the dummy datas
+      Booking part is done
+      Log in page fixed
+      Add space on the user.html
+
+Minjae Lee (6):
+      Initial commit
+      Update README.md
+      Update README.md
+      Update README.md
+      Update README.md
+      Update README.md
+
+Sharpoodle (4):
+      Update models.py
+      Update models.py
+      Update models.py
+      Update 404.html
+
+Vivid809 (18):
+      Changes were for forms, models and event to match, will make further changes
+      Routing for home page, connecting to db
+      loops for events, filter events by categeroy and display information dynamically
+      This is for the dynamic presenting mentioned in index.html push comment, checks form Open etc
+      removed initial instance placeholder
+      Got rid of placeholder sql.txt
+      Resolved merge conflict by removing sql.txt
+      Remove sql.txt file from tracking
+      fixed base html
+      no route for booking history yet
+      changes to the css, added background color + cards
+      Fixed category dropdown, everything is finished
+      Fixed the event details layout
+      Fixed the inactive status of events in views.py
+      final testing with event status done
+      Added the back buttons for more website clarity
+      Merge branch 'main' of https://github.com/justinminlee/IAB207_A3
+      Added back btn to the search_results as well
+
+kaliflinfoot (14):
+      Update index.html
+      update models.py
+      update models.py
+      update update-event.htm
+      Update update-event.html
+      update update-event.html
+      update event-details.html
+      update create-event.html
+      update myevents.html
+      update my-events.html
+      update booking-history.html
+      update update-event.html
+      update event-details.html
+      update base.html
+
