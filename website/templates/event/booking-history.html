@@ -3,6 +3,7 @@
 {% block content %}
 <!-- Main Content Section -->
 <main class="container my-5">
+  <a href="{{ request.args.get('next') or url_for('main.index') }}" class="btn btn-secondary mt-3 mb-4">Go Back</a>
   <h1 class="text-center mb-4">Booking History</h1>
   <div class="row">
     {% if bookings %}

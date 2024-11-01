@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class='container'>
+  <a href="{{ request.args.get('next') or url_for('main.index') }}" class="btn btn-secondary mt-3 mb-4">Go Back</a>
   <div class='row mt-5'>
     <div class='col-md-10'>
       <h2>Create an Event</h2>
