@@ -1,5 +1,7 @@
-{% include "base.html" %}
+{% extends "base.html" %}
+
 {% from "bootstrap5/form.html" import render_form %}
+
 {% block content %}  <!-- Changed 'body' to 'content' to match your base template -->
 
 <div class="page-header">
@@ -17,5 +19,8 @@
     <p>New user? <a href="{{ url_for('auth.register') }}">Click here</a> to register.</p>  <!-- Updated to use 'auth.register' -->
 </div>
 {% endif %}
+<!-- spaces between forms and footers -->
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+</br>
 
 {% endblock %}
